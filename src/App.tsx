@@ -19,6 +19,8 @@ type Participant = {
   name: string;
 }
 
+// TODO: Add some more matches
+// Set up mocks with all the teams involved, find pictures of each team's logo
 const matches: SingleEliminationMatch[] = [
   {
     "id": 260005,
