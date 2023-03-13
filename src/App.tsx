@@ -1,5 +1,7 @@
 import './App.css'
 import { SingleEliminationBracket, Match, SVGViewer } from '@g-loot/react-tournament-brackets';
+import * as TeamNames from './data/MTeams.json';
+import * as SampleSubmission from './data/SampleSubmission2023.json';
 
 type SingleEliminationMatch = {
   id: number;
@@ -62,6 +64,34 @@ export const SingleElimination = () => (
 );
 
 function App() {
+
+  console.log('teamNames: ', TeamNames.teams.length);
+
+  console.log('SampleSubmission: ', SampleSubmission.predictions)
+
+  console.log('teams: ', TeamNames.teams);
+
+  const teams = {};
+  TeamNames.teams.forEach((team) => {
+    teams[team.TeamID] = team.TeamName
+  });
+
+  console.log('team map: ', teams);
+
+  const predictions = [];
+  SampleSubmission.predictions.forEach((prediction) => {
+    const split = prediction.ID.split("_");
+    const year = parseInt(split[0]);
+    const team1 = parseInt(split[1]);
+    const team2 = parseInt(split[2]);
+
+    console.log('year: ', year);
+    console.log('team1Name: ', teams[team1]);
+    console.log('team2Name: ', teams[team2]);
+    console.log('prediction: ', prediction.Pred);
+
+  })
+
   return (
     <div className="App">
       <SingleElimination />
