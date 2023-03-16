@@ -1,67 +1,62 @@
 import './App.css'
-import { SingleEliminationBracket, Match, SVGViewer } from '@g-loot/react-tournament-brackets';
-
-type SingleEliminationMatch = {
-  id: number;
-  name: string;
-  nextMatchId: string | null;
-  tournamentRoundText: string;
-  startTime: string;
-  state: "DONE" | "NO_SHOW" | "WALK_OVER" | "NO_PARTY" | "DONE" | "SCORE_DONE"
-  participants: Participant[];
-}
-
-type Participant = {
-  id: string;
-  resultText: string | null;
-  isWinner: boolean;
-  status: 'PLAYED' | 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | null;
-  name: string;
-}
-
-// TODO: Add some more matches
-// Set up mocks with all the teams involved, find pictures of each team's logo
-const matches: SingleEliminationMatch[] = [
-  {
-    "id": 260005,
-    "name": "Final - Match",
-    "nextMatchId": null, // Id for the nextMatch in the bracket, if it's final match it must be null OR undefined
-    "tournamentRoundText": "4", // Text for Round Header
-    "startTime": "2021-05-30",
-    "state": "DONE", // 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | 'DONE' | 'SCORE_DONE' Only needed to decide walkovers and if teamNames are TBD (to be decided)
-    "participants": [
-      {
-        "id": "c016cb2a-fdd9-4c40-a81f-0cc6bdf4b9cc", // Unique identifier of any kind
-        "resultText": "WON", // Any string works
-        "isWinner": false,
-        "status": null, // 'PLAYED' | 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | null
-        "name": "giacomo123"
-      },
-      {
-        "id": "9ea9ce1a-4794-4553-856c-9a3620c0531b",
-        "resultText": null,
-        "isWinner": true,
-        "status": null, // 'PLAYED' | 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY'
-        "name": "Ant"
-      }
-    ]
-  }
-]
-
-
-export const SingleElimination = () => (
-  <SingleEliminationBracket
-    matches={matches}
-    matchComponent={Match}
-    svgWrapper={({ children, ...props }) => (
-      <SVGViewer width={500} height={500} {...props}>
-        {children}
-      </SVGViewer>
-    )}
-  />
-);
+import * as TeamNames from './data/MTeams.json';
+import * as SampleSubmission from './data/SampleSubmission2023.json';
+import { demoMatches, SingleElimination } from './components/SingleElimination';
 
 function App() {
+
+  // Make a map of team ids to names
+  const teams: Record<string, string> = {};
+  TeamNames.teams.forEach((team) => {
+    teams[team.TeamID] = team.TeamName
+  });
+
+  // Make a map of match ID's to predictions.
+  // See SampleSubmission2023.json for more info.
+  // id format: 2023_<team1Id>_<team2Id>,
+  const predictions: Record<string, string> = {}
+  SampleSubmission.predictions.forEach((prediction) => {
+    predictions[prediction.ID] = prediction.Pred;
+  })
+
+  demoMatches.forEach((match) => {
+    // Iterate through each match and print out who is playing who, as well as the prediction for the match.
+    const team1 = match.participants[0];
+    const team2 = match.participants[1];
+
+    // may be a little confusing, but:
+    // teams in Kaggle's submission format have four digit ids.
+    // anything else that's a UUID is something that is just in there for mocking purposes at the moment.
+    // Matches where players are undecided will have UUIDs as a team id (or a name of name BLANK, ---)
+
+    // Might be good idea to move this into a filter function instead
+    if (team1.id.length > 4 || team2.id.length > 4) {
+      // console.log('returning early: ');
+      // console.log('uuid team1 id: ', team1.id);
+      // console.log('uuid team1 name: ', team1.name);
+
+      // console.log('uuid team2 id: ', team2.id);
+      // console.log('uuid team2.name: ', team2.name);
+      return;
+    }
+
+    // console.log('team1 id: ', team1.id);
+    // console.log('team1 name: ', team1.name);
+
+    // console.log('team2 id: ', team2.id);
+    // console.log('team2.name: ', team2.name);
+
+
+    // NOTE: lower team ids go first.
+    // smash ids together and get the prediction.
+    const lowerId = Math.min(parseInt(team1.id), parseInt(team2.id));
+    const higherId = Math.max(parseInt(team1.id), parseInt(team2.id));
+    const predictionId = `2023_${lowerId}_${higherId}`;
+
+    const predictionResult = predictions[predictionId];
+    console.log('predictionResult: ', predictionResult);
+  })
+
   return (
     <div className="App">
       <SingleElimination />
@@ -69,4 +64,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
