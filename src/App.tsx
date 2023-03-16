@@ -1,5 +1,5 @@
 import './App.css'
-import { SingleEliminationBracket, Match, SVGViewer } from '@g-loot/react-tournament-brackets';
+import { SingleEliminationBracket, SVGViewer } from '@g-loot/react-tournament-brackets';
 import * as TeamNames from './data/MTeams.json';
 import * as SampleSubmission from './data/SampleSubmission2023.json';
 import useWindowSize from './useWindowSize';
@@ -1971,37 +1971,32 @@ function App() {
     // anything else that's a UUID is something that is just in there for mocking purposes at the moment.
     // Matches where players are undecided will have UUIDs as a team id (or a name of name BLANK, ---)
 
-    // Might be good idea to move this into a filter.
+    // Might be good idea to move this into a filter function instead
     if (team1.id.length > 4 || team2.id.length > 4) {
-      console.log('returning early: ');
-      console.log('uuid team1 id: ', team1.id);
-      console.log('uuid team1 name: ', team1.name);
+      // console.log('returning early: ');
+      // console.log('uuid team1 id: ', team1.id);
+      // console.log('uuid team1 name: ', team1.name);
 
-      console.log('uuid team2 id: ', team2.id);
-      console.log('uuid team2.name: ', team2.name);
+      // console.log('uuid team2 id: ', team2.id);
+      // console.log('uuid team2.name: ', team2.name);
       return;
     }
 
-    console.log('team1 id: ', team1.id);
-    console.log('team1 name: ', team1.name);
+    // console.log('team1 id: ', team1.id);
+    // console.log('team1 name: ', team1.name);
 
-    console.log('team2 id: ', team2.id);
-    console.log('team2.name: ', team2.name);
+    // console.log('team2 id: ', team2.id);
+    // console.log('team2.name: ', team2.name);
 
 
     // NOTE: lower team ids go first.
     // smash ids together and get the prediction.
-    const predictionId = `2023_${team1.id}_${team2.id}`;
+    const lowerId = Math.min(parseInt(team1.id), parseInt(team2.id));
+    const higherId = Math.max(parseInt(team1.id), parseInt(team2.id));
+    const predictionId = `2023_${lowerId}_${higherId}`;
 
     const predictionResult = predictions[predictionId];
     console.log('predictionResult: ', predictionResult);
-    if (!predictionResult) {
-      console.log('trying fallback prediction id: ')
-      // Not sure which way the matchup works, could be team2 to team1 as well,
-      // really depends on what our dataset is returning back to us.
-      const fallbackPredictionId = `2023_${team2.id}_${team1.id}`;
-      console.log('predictionResult: ', predictions[fallbackPredictionId]);
-    }
   })
 
   return (
