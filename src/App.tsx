@@ -2,6 +2,7 @@ import './App.css'
 import { SingleEliminationBracket, Match, SVGViewer } from '@g-loot/react-tournament-brackets';
 import * as TeamNames from './data/MTeams.json';
 import * as SampleSubmission from './data/SampleSubmission2023.json';
+import useWindowSize from './useWindowSize';
 
 type SingleEliminationMatch = {
   id: number;
@@ -23,65 +24,7 @@ type Participant = {
   picture?: string | null;
 }
 
-// TODO: Add some more matches
-// Set up mocks with all the teams involved, find pictures of each team's logo
-/*
-const tournamentMatches: SingleEliminationMatch[] = [
-  {
-    "id": 19874,
-    "name": "First Round - South",
-    "nextMatchId": null,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2023-03-16",
-    "state": "SCHEDULED",
-    "participants": [
-      {
-        "id": "1104",
-        "resultText": null,
-        "isWinner": false,
-        "status": null,
-        "name": "Alabama",
-        "picture": null
-      },
-      {
-        "id": "1394",
-        "resultText": null,
-        "isWinner": false,
-        "status": null,
-        "name": 'Texas A&M-Corpus Christi Islanders'
-      },
-    ]
-  },
-  {
-    "id": 19875,
-    "name": "First Round - South",
-    "nextMatchId": null,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2023-03-16",
-    "state": "SCHEDULED",
-    "participants": [
-      {
-        "id": "1104",
-        "resultText": null,
-        "isWinner": false,
-        "status": null,
-        "name": "Alabama",
-        "picture": null
-      },
-      {
-        "id": "1394",
-        "resultText": null,
-        "isWinner": false,
-        "status": null,
-        "name": 'Texas A&M-Corpus Christi Islanders'
-      },
-    ]
-  },
-];
-*/
-
+// TODO: Set up mocks with all the teams involved, find pictures of each team's logo
 const demoMatches: SingleEliminationMatch[] = [
   {
     "id": 19874,
@@ -89,7 +32,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": null,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "6",
-    "startTime": "2021-05-30",
+    "startTime": "2023-04-03",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -116,7 +59,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19874,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "5",
-    "startTime": "2021-05-30",
+    "startTime": "2023-04-01",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -143,7 +86,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19874,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "5",
-    "startTime": "2021-05-30",
+    "startTime": "2023-04-01",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -170,7 +113,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19875,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "4",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-25",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -197,7 +140,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19875,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "4",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-25",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -205,7 +148,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       },
       {
@@ -213,7 +156,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       }
     ]
@@ -224,7 +167,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19906,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "4",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-25",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -232,7 +175,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       },
       {
@@ -240,7 +183,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       }
     ]
@@ -251,7 +194,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19906,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "4",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-25",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -259,7 +202,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       },
       {
@@ -267,7 +210,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       }
     ]
@@ -278,15 +221,15 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19876,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
-    "state": "DONE",
+    "startTime": "2023-03-23",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "acf45434-78a1-4907-bf19-92235d180e8b",
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       },
       {
@@ -294,7 +237,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       }
     ]
@@ -305,7 +248,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19876,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-23",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -313,7 +256,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       },
       {
@@ -321,7 +264,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       }
     ]
@@ -332,7 +275,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19891,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-23",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -340,7 +283,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       },
       {
@@ -348,7 +291,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       }
     ]
@@ -359,7 +302,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19891,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-23",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -367,7 +310,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       },
       {
@@ -375,7 +318,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       }
     ]
@@ -386,7 +329,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19907,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-23",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -394,7 +337,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       },
       {
@@ -402,7 +345,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       }
     ]
@@ -413,7 +356,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19907,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-23",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -421,7 +364,8 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----"
+        ,
         "picture": null
       },
       {
@@ -429,7 +373,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       }
     ]
@@ -440,7 +384,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19922,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-23",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -448,7 +392,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       },
       {
@@ -456,7 +400,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       }
     ]
@@ -467,7 +411,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19922,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-23",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -475,15 +419,16 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----"
+        ,
         "picture": null
       },
       {
         "id": "7fbd66f3-7eaa-4567-bc87-5a82f10417ad",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "-",
+        "status": null,
+        "name": "----",
         "picture": null
       }
     ]
@@ -494,7 +439,7 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19877,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-18",
     "state": "SCHEDULED",
     "participants": [
       {
@@ -502,15 +447,15 @@ const demoMatches: SingleEliminationMatch[] = [
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
-        "picture": "teamlogos/client_team_default_logo"
+        "name": "----",
+        "picture": null
       },
       {
         "id": "a552ca06-579d-41ee-9405-4cedd187c5bf",
         "resultText": null,
         "isWinner": false,
         "status": null,
-        "name": "-",
+        "name": "----",
         "picture": null
       }
     ]
@@ -521,23 +466,23 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19877,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "fdce979a-002e-4906-a80f-d161f108bcde",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "omar boi",
-        "picture": "teamlogos/client_team_default_logo"
+        "status": null,
+        "name": "----",
+        "picture": null
       },
       {
         "id": "acf45434-78a1-4907-bf19-92235d180e8b",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "omaromar",
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
         "picture": null
       }
     ]
@@ -548,24 +493,24 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19884,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "059743f7-9501-471e-8f9e-2d1032eccc67",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TestTeamz",
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
         "picture": null
       },
       {
         "id": "c7a2ec6b-389f-429d-819e-53594e94d475",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "test123",
-        "picture": "teamlogos/client_team_default_logo"
+        "status": null,
+        "name": "----",
+        "picture": null
       }
     ]
   },
@@ -575,24 +520,24 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19884,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-18",
     "state": "SCHEDULED",
     "participants": [
       {
         "id": "51c449a7-fb04-445a-b478-1ca95feeeafa",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test73",
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
         "picture": null
       },
       {
         "id": "ce914b1b-fe1e-4be9-8409-681049265614",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "test5",
-        "picture": "teamlogos/client_team_default_logo"
+        "status": null,
+        "name": "----",
+        "picture": null
       }
     ]
   },
@@ -602,24 +547,24 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19892,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-18",
     "state": "SCHEDULED",
     "participants": [
       {
         "id": "43ddad56-5798-4364-bd5c-81ba2640e22a",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "testing",
+        "status": null,
+        "name": "----",
         "picture": null
       },
       {
         "id": "e7fe8889-13e8-46f7-8515-3c9d89c07ba1",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test87",
-        "picture": "teamlogos/client_team_default_logo"
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
+        "picture": null
       }
     ]
   },
@@ -629,23 +574,23 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19892,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "7eac0db4-2e53-4f42-a670-58847b1f5e4c",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "SCHEDULED",
-        "name": "Test 1",
-        "picture": "teamlogos/client_team_default_logo"
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
+        "picture": null
       },
       {
         "id": "85568369-9f06-4098-be5f-1922e2ae61e5",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "Testpubg",
+        "status": null,
+        "name": "----",
         "picture": null
       }
     ]
@@ -656,24 +601,24 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19899,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "9d13814a-81b9-43d1-b9f9-42da1fe22578",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "adam peleback",
-        "picture": "teamlogos/G-Loot_Logo_Portrait_Green_Black128px_yhkf4w"
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
+        "picture": null
       },
       {
         "id": "5b29528f-0dab-4dea-97d8-e6528b6cfc6c",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "glltest",
-        "picture": "teamlogos/client_team_default_logo"
+        "status": null,
+        "name": "----",
+        "picture": null
       }
     ]
   },
@@ -683,23 +628,23 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19899,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "8055f16b-3cc9-495a-b40a-2742712be6c6",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "Adam testar",
-        "picture": "teamlogos/client_team_default_logo"
+        "status": null,
+        "name": "----",
+        "picture": null
       },
       {
         "id": "c266ef2c-eab7-4b14-b41a-03265b6dfd74",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "adamamd",
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
         "picture": null
       }
     ]
@@ -710,24 +655,24 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19908,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "02aae6b1-bd99-4469-9d5a-4a83019d7dbc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test6000",
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
         "picture": null
       },
       {
         "id": "cb177e1d-6e6c-44b5-829a-45b699529274",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "test50",
-        "picture": "teamlogos/client_team_default_logo"
+        "status": null,
+        "name": "----",
+        "picture": null
       }
     ]
   },
@@ -737,23 +682,23 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19908,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "de637dbe-363b-40cd-bae9-5a5e97a61ccc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Test Post",
-        "picture": "teamlogos/client_team_default_logo"
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
+        "picture": null
       },
       {
         "id": "b4889d7a-5e25-4bae-aa4a-40776f44ef2d",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "omarapexnice",
+        "status": null,
+        "name": "----",
         "picture": null
       }
     ]
@@ -764,24 +709,24 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19915,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "3a353047-4af3-4320-b2cf-2d83ddc9115a",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "TestTeamData",
+        "status": null,
+        "name": "----",
         "picture": null
       },
       {
         "id": "390f872a-fe15-48a3-9283-4191ff4263e7",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Test123",
-        "picture": "teamlogos/client_team_default_logo"
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
+        "picture": null
       }
     ]
   },
@@ -791,24 +736,24 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19915,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "4b5c9937-9e69-4e5b-8344-6a68d6c12a64",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "test9",
-        "picture": "teamlogos/client_team_default_logo"
+        "status": null,
+        "name": "----",
+        "picture": null
       },
       {
         "id": "0be9036e-4cb4-4d95-b45a-b8725b4a2b73",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test357375",
-        "picture": "teamlogos/client_team_default_logo"
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
+        "picture": null
       }
     ]
   },
@@ -818,23 +763,23 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19923,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "4ce605b1-28c5-4359-a2b8-5aa232299f2e",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TESTWTF",
-        "picture": "teamlogos/images_wstysk"
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
+        "picture": null
       },
       {
         "id": "0f8844f8-91a3-4969-9557-8ac560f3a7d2",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "TestTeam12344",
+        "status": null,
+        "name": "----",
         "picture": null
       }
     ]
@@ -845,23 +790,23 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19923,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "ad2a0a89-d3bb-49dd-b8fc-2ec100e33477",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Testing new Team",
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
         "picture": null
       },
       {
         "id": "613f708c-b000-4aa7-a9b1-47de355c9fac",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "testteam",
+        "status": null,
+        "name": "----",
         "picture": null
       }
     ]
@@ -872,23 +817,23 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19930,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "b5edee08-6d0a-4e3d-9587-57a2d585e490",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "Adam testar",
-        "picture": "teamlogos/client_team_default_logo"
+        "status": null,
+        "name": "----",
+        "picture": null
       },
       {
         "id": "7fbd66f3-7eaa-4567-bc87-5a82f10417ad",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "adamapexnice",
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
         "picture": null
       }
     ]
@@ -899,24 +844,24 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19930,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-18",
+    "state": "SCHEDULED",
     "participants": [
       {
         "id": "354506c4-d07d-4785-9759-755941a6cccc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TestTeam1234",
+        "resultText": null,
+        "isWinner": false,
+        "status": null,
+        "name": "----",
         "picture": null
       },
       {
         "id": "3dce492c-ecad-453c-98e7-2b96ddbf8800",
-        "resultText": "Lost",
+        "resultText": null,
         "isWinner": false,
-        "status": "PLAYED",
-        "name": "gloot3 test",
-        "picture": "teamlogos/client_team_default_logo"
+        "status": null,
+        "name": "----",
+        "picture": null
       }
     ]
   },
@@ -927,11 +872,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19878,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-16",
     "state": "SCHEDULED",
     "participants": [
       {
-        "id": "bcbe20a3-82b5-4818-bb29-4c1149e9f04e",
+        "id": "1104",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -940,7 +885,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "a552ca06-579d-41ee-9405-4cedd187c5bf",
+        "id": "1394",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -955,11 +900,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19878,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "5acb196d-5f82-47f3-ae5a-2e87d070f610",
+        "id": "1268",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -968,7 +913,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "6d9ec9e8-d10d-424b-a00f-2078d4e08d39",
+        "id": "1452",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -984,11 +929,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19881,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "acf45434-78a1-4907-bf19-92235d180e8b",
+        "id": "1361",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -997,7 +942,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "acf45434-78a1-4907-bf19-92235d180e8b",
+        "id": "1158",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1013,11 +958,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19881,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "fdce979a-002e-4906-a80f-d161f108bcde",
+        "id": "1438",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1026,7 +971,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "b264744c-0114-46b9-ab28-a7f56aded7bd",
+        "id": "1202",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1042,11 +987,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19885,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "d9a7b576-9d7e-430c-aa7e-6401d6eb7cf8",
+        "id": "1166",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1055,7 +1000,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "c7a2ec6b-389f-429d-819e-53594e94d475",
+        "id": "1301",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1071,11 +1016,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19885,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "8411c4ef-f337-42c9-bff9-63c2f0e80255",
+        "id": "1124",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1084,7 +1029,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "059743f7-9501-471e-8f9e-2d1032eccc67",
+        "id": "1364",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1100,11 +1045,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19888,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "ce914b1b-fe1e-4be9-8409-681049265614",
+        "id": "1281",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1113,7 +1058,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "86cd4ff0-14ae-445c-820a-777fe448cddb",
+        "id": "1429",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1129,11 +1074,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19888,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-16",
     "state": "SCHEDULED",
     "participants": [
       {
-        "id": "51c449a7-fb04-445a-b478-1ca95feeeafa",
+        "id": "1112",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1142,7 +1087,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "b370498e-5e54-4d98-88ef-ba039ee7fb62",
+        "id": "1343",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1160,11 +1105,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19893,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "f00e68b3-70d4-46c6-8004-1b2726adb0dc",
+        "id": "1345",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1189,11 +1134,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19893,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "43ddad56-5798-4364-bd5c-81ba2640e22a",
+        "id": "1272",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1202,7 +1147,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "a34587db-a088-44ba-98b2-c8efd07df9ed",
+        "id": "1194",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1218,11 +1163,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19896,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "7eac0db4-2e53-4f42-a670-58847b1f5e4c",
+        "id": "1181",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1231,7 +1176,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "20bc489c-6c63-402f-908e-586e531a96b2",
+        "id": "1331",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1247,11 +1192,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19896,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "3947ccbc-18d4-47e3-ba19-f1ba697800e3",
+        "id": "1397",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1260,7 +1205,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "85568369-9f06-4098-be5f-1922e2ae61e5",
+        "id": "1418",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1276,11 +1221,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19900,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "e44b992f-676c-492e-98d2-b238162cc2e0",
+        "id": "1246",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1289,7 +1234,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "5b29528f-0dab-4dea-97d8-e6528b6cfc6c",
+        "id": "1344",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1305,11 +1250,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19900,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "5a02ce4d-ad2a-4ee7-b3d2-4dad7b9b164a",
+        "id": "1243",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1318,7 +1263,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "9d13814a-81b9-43d1-b9f9-42da1fe22578",
+        "id": "1286",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1334,11 +1279,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19903,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "856abe5e-5e46-4113-8485-f7829aeb27ba",
+        "id": "1277",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1347,7 +1292,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "c266ef2c-eab7-4b14-b41a-03265b6dfd74",
+        "id": "1425",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1363,11 +1308,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19903,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "8055f16b-3cc9-495a-b40a-2742712be6c6",
+        "id": "1266",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1376,7 +1321,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "c934f0ee-c9d8-4cf7-ad55-7f98a7b19b6f",
+        "id": "1436",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1394,11 +1339,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19909,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "cb177e1d-6e6c-44b5-829a-45b699529274",
+        "id": "1222",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1407,7 +1352,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "2ae79460-4d1c-42a9-88cc-cf76adb4bb08",
+        "id": "1297",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1423,11 +1368,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19909,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "348c0a6b-5499-421a-9125-6b3d08bcef9c",
+        "id": "1234",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1436,7 +1381,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "02aae6b1-bd99-4469-9d5a-4a83019d7dbc",
+        "id": "1120",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1452,11 +1397,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19912,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "91c101fd-d744-4eb1-abf1-7edfe09e7429",
+        "id": "1274",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1465,7 +1410,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "de637dbe-363b-40cd-bae9-5a5e97a61ccc",
+        "id": "1179",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1481,11 +1426,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19912,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "1262eafb-9d48-4536-a428-fb43d0da2e07",
+        "id": "1231",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1494,7 +1439,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "b4889d7a-5e25-4bae-aa4a-40776f44ef2d",
+        "id": "1245",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1510,11 +1455,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19916,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "390f872a-fe15-48a3-9283-4191ff4263e7",
+        "id": "1235",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1523,7 +1468,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "59a941da-398d-4dbd-baa6-1769314e5826",
+        "id": "1338",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1539,11 +1484,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19916,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "cc4b8479-e825-40a8-b24b-3f0fbfb421f4",
+        "id": "1462",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1552,7 +1497,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "3a353047-4af3-4320-b2cf-2d83ddc9115a",
+        "id": "1244",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1568,11 +1513,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19919,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "4b5c9937-9e69-4e5b-8344-6a68d6c12a64",
+        "id": "1401",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1581,7 +1526,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "a37c7aeb-38bd-46b8-87f7-3cbaf212a9fb",
+        "id": "1336",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1597,11 +1542,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19919,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "0be9036e-4cb4-4d95-b45a-b8725b4a2b73",
+        "id": "1400",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1610,7 +1555,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "2486582b-574a-40fc-a8d3-b426cda99abf",
+        "id": "1159",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1628,11 +1573,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19924,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "3ae53b5b-958d-4f01-a40e-bab340036a29",
+        "id": "1242",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1641,7 +1586,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "4ce605b1-28c5-4359-a2b8-5aa232299f2e",
+        "id": "1224",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1657,11 +1602,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19924,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
+    "startTime": "2023-03-16",
     "state": "DONE",
     "participants": [
       {
-        "id": "c85a0d8a-4e22-4781-8494-d2cd600a3396",
+        "id": "1116",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1670,7 +1615,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "0f8844f8-91a3-4969-9557-8ac560f3a7d2",
+        "id": "1228",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1686,11 +1631,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19927,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "ad2a0a89-d3bb-49dd-b8fc-2ec100e33477",
+        "id": "1388",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1699,7 +1644,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "241150ef-951e-4e4c-82b5-9a26125521d1",
+        "id": "1433",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1715,11 +1660,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19927,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "a35b99fb-fd75-4ed5-9a51-6cd772beebf0",
+        "id": "1163",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1728,7 +1673,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "613f708c-b000-4aa7-a9b1-47de355c9fac",
+        "id": "1233",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1744,11 +1689,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19931,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "7fbd66f3-7eaa-4567-bc87-5a82f10417ad",
+        "id": "1395",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1773,11 +1718,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19931,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "bb31a7b7-8563-416c-8c8f-b57b7b56fdca",
+        "id": "1211",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1786,7 +1731,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "b5edee08-6d0a-4e3d-9587-57a2d585e490",
+        "id": "1213",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1802,11 +1747,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19934,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "f4e36b1f-ba40-4368-ab2e-97cad78c2932",
+        "id": "1321",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1815,7 +1760,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "354506c4-d07d-4785-9759-755941a6cccc",
+        "id": "1129",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1831,11 +1776,11 @@ const demoMatches: SingleEliminationMatch[] = [
     "nextMatchId": 19934,
     "nextLooserMatchId": undefined,
     "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
+    "startTime": "2023-03-16",
+    "state": "SCHEDULED",
     "participants": [
       {
-        "id": "3dce492c-ecad-453c-98e7-2b96ddbf8800",
+        "id": "1417",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1844,7 +1789,7 @@ const demoMatches: SingleEliminationMatch[] = [
         "picture": null
       },
       {
-        "id": "8ef16ac0-358b-4d6a-8049-1f3962d060e0",
+        "id": "1421",
         "resultText": null,
         "isWinner": false,
         "status": null,
@@ -1854,1723 +1799,209 @@ const demoMatches: SingleEliminationMatch[] = [
       }
     ]
   }
-]
+];
 
+export type Theme = {
+  fontFamily: string;
+  transitionTimingFunction: string;
+  disabledColor: string;
+  matchBackground: {
+    wonColor: string;
+    lostColor: string;
+  };
+  border: {
+    color: string;
+    highlightedColor: string;
+  };
+  textColor: {
+    highlighted: string;
+    main: string;
+    dark: string;
+    disabled: string;
+  };
+  score: {
+    text: {
+      highlightedWonColor: string;
+      highlightedLostColor: string;
+    };
+    background: {
+      wonColor: string;
+      lostColor: string;
+    };
+  };
+  canvasBackground: string;
+};
 
-/*
-const matches: SingleEliminationMatch[] = [
-  {
-    "id": 19874,
-    "name": "Final - Match",
-    "nextMatchId": null,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "6",
-    "startTime": "2021-05-30",
-    "state": "DONE",
-    "participants": [
-      {
-        "id": "354506c4-d07d-4785-9759-755941a6cccc",
-        "resultText": null,
-        "isWinner": false,
-        "status": null,
-        "name": "TestTeam1234",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19875,
-    "name": "Semi Final - Match 1",
-    "nextMatchId": 19874,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "5",
-    "startTime": "2021-05-30",
-    "state": "SCHEDULED",
-    "participants": [
-      {
-        "id": "e7fe8889-13e8-46f7-8515-3c9d89c07ba1",
-        "resultText": null,
-        "isWinner": false,
-        "status": null,
-        "name": "test87",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19906,
-    "name": "Semi Final - Match 2",
-    "nextMatchId": 19874,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "5",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "0be9036e-4cb4-4d95-b45a-b8725b4a2b73",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test357375",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "354506c4-d07d-4785-9759-755941a6cccc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TestTeam1234",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19876,
-    "name": "Round 4 - Match 1",
-    "nextMatchId": 19875,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "4",
-    "startTime": "2021-05-30",
-    "state": "DONE",
-    "participants": [
-      {
-        "id": "059743f7-9501-471e-8f9e-2d1032eccc67",
-        "resultText": null,
-        "isWinner": false,
-        "status": null,
-        "name": "TestTeamz",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19891,
-    "name": "Round 4 - Match 2",
-    "nextMatchId": 19875,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "4",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "e7fe8889-13e8-46f7-8515-3c9d89c07ba1",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test87",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "c266ef2c-eab7-4b14-b41a-03265b6dfd74",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "adamamd",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19907,
-    "name": "Round 4 - Match 3",
-    "nextMatchId": 19906,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "4",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "0be9036e-4cb4-4d95-b45a-b8725b4a2b73",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test357375",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "de637dbe-363b-40cd-bae9-5a5e97a61ccc",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Test Post",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19922,
-    "name": "Round 4 - Match 4",
-    "nextMatchId": 19906,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "4",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "4ce605b1-28c5-4359-a2b8-5aa232299f2e",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "TESTWTF",
-        "picture": "teamlogos/images_wstysk"
-      },
-      {
-        "id": "354506c4-d07d-4785-9759-755941a6cccc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TestTeam1234",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19877,
-    "name": "Round 3 - Match 1",
-    "nextMatchId": 19876,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
-    "state": "DONE",
-    "participants": [
-      {
-        "id": "acf45434-78a1-4907-bf19-92235d180e8b",
-        "resultText": null,
-        "isWinner": false,
-        "status": null,
-        "name": "omaromar",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19884,
-    "name": "Round 3 - Match 2",
-    "nextMatchId": 19876,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "51c449a7-fb04-445a-b478-1ca95feeeafa",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test73",
-        "picture": null
-      },
-      {
-        "id": "059743f7-9501-471e-8f9e-2d1032eccc67",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TestTeamz",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19892,
-    "name": "Round 3 - Match 3",
-    "nextMatchId": 19891,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "e7fe8889-13e8-46f7-8515-3c9d89c07ba1",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test87",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "7eac0db4-2e53-4f42-a670-58847b1f5e4c",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Test 1",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19899,
-    "name": "Round 3 - Match 4",
-    "nextMatchId": 19891,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "9d13814a-81b9-43d1-b9f9-42da1fe22578",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "adam peleback",
-        "picture": "teamlogos/G-Loot_Logo_Portrait_Green_Black128px_yhkf4w"
-      },
-      {
-        "id": "c266ef2c-eab7-4b14-b41a-03265b6dfd74",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "adamamd",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19908,
-    "name": "Round 3 - Match 5",
-    "nextMatchId": 19907,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "de637dbe-363b-40cd-bae9-5a5e97a61ccc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Test Post",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "02aae6b1-bd99-4469-9d5a-4a83019d7dbc",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test6000",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19915,
-    "name": "Round 3 - Match 6",
-    "nextMatchId": 19907,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "0be9036e-4cb4-4d95-b45a-b8725b4a2b73",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test357375",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "390f872a-fe15-48a3-9283-4191ff4263e7",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Test123",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19923,
-    "name": "Round 3 - Match 7",
-    "nextMatchId": 19922,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "ad2a0a89-d3bb-49dd-b8fc-2ec100e33477",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Testing new Team",
-        "picture": null
-      },
-      {
-        "id": "4ce605b1-28c5-4359-a2b8-5aa232299f2e",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TESTWTF",
-        "picture": "teamlogos/images_wstysk"
-      }
-    ]
-  },
-  {
-    "id": 19930,
-    "name": "Round 3 - Match 8",
-    "nextMatchId": 19922,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "3",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "354506c4-d07d-4785-9759-755941a6cccc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TestTeam1234",
-        "picture": null
-      },
-      {
-        "id": "7fbd66f3-7eaa-4567-bc87-5a82f10417ad",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "adamapexnice",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19878,
-    "name": "Round 2 - Match 1",
-    "nextMatchId": 19877,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "DONE",
-    "participants": [
-      {
-        "id": "6d9ec9e8-d10d-424b-a00f-2078d4e08d39",
-        "resultText": null,
-        "isWinner": false,
-        "status": null,
-        "name": "test9",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "a552ca06-579d-41ee-9405-4cedd187c5bf",
-        "resultText": null,
-        "isWinner": false,
-        "status": null,
-        "name": "Test of Tests",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19881,
-    "name": "Round 2 - Match 2",
-    "nextMatchId": 19877,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "fdce979a-002e-4906-a80f-d161f108bcde",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "omar boi",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "acf45434-78a1-4907-bf19-92235d180e8b",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "omaromar",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19885,
-    "name": "Round 2 - Match 3",
-    "nextMatchId": 19884,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "059743f7-9501-471e-8f9e-2d1032eccc67",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TestTeamz",
-        "picture": null
-      },
-      {
-        "id": "c7a2ec6b-389f-429d-819e-53594e94d475",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test123",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19888,
-    "name": "Round 2 - Match 4",
-    "nextMatchId": 19884,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "51c449a7-fb04-445a-b478-1ca95feeeafa",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test73",
-        "picture": null
-      },
-      {
-        "id": "ce914b1b-fe1e-4be9-8409-681049265614",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test5",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19893,
-    "name": "Round 2 - Match 5",
-    "nextMatchId": 19892,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "43ddad56-5798-4364-bd5c-81ba2640e22a",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "testing",
-        "picture": null
-      },
-      {
-        "id": "e7fe8889-13e8-46f7-8515-3c9d89c07ba1",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test87",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19896,
-    "name": "Round 2 - Match 6",
-    "nextMatchId": 19892,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "7eac0db4-2e53-4f42-a670-58847b1f5e4c",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Test 1",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "85568369-9f06-4098-be5f-1922e2ae61e5",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Testpubg",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19900,
-    "name": "Round 2 - Match 7",
-    "nextMatchId": 19899,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "9d13814a-81b9-43d1-b9f9-42da1fe22578",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "adam peleback",
-        "picture": "teamlogos/G-Loot_Logo_Portrait_Green_Black128px_yhkf4w"
-      },
-      {
-        "id": "5b29528f-0dab-4dea-97d8-e6528b6cfc6c",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "glltest",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19903,
-    "name": "Round 2 - Match 8",
-    "nextMatchId": 19899,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "8055f16b-3cc9-495a-b40a-2742712be6c6",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Adam testar",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "c266ef2c-eab7-4b14-b41a-03265b6dfd74",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "adamamd",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19909,
-    "name": "Round 2 - Match 9",
-    "nextMatchId": 19908,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "02aae6b1-bd99-4469-9d5a-4a83019d7dbc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test6000",
-        "picture": null
-      },
-      {
-        "id": "cb177e1d-6e6c-44b5-829a-45b699529274",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test50",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19912,
-    "name": "Round 2 - Match 10",
-    "nextMatchId": 19908,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "de637dbe-363b-40cd-bae9-5a5e97a61ccc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Test Post",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "b4889d7a-5e25-4bae-aa4a-40776f44ef2d",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "omarapexnice",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19916,
-    "name": "Round 2 - Match 11",
-    "nextMatchId": 19915,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "3a353047-4af3-4320-b2cf-2d83ddc9115a",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "TestTeamData",
-        "picture": null
-      },
-      {
-        "id": "390f872a-fe15-48a3-9283-4191ff4263e7",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Test123",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19919,
-    "name": "Round 2 - Match 12",
-    "nextMatchId": 19915,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "4b5c9937-9e69-4e5b-8344-6a68d6c12a64",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test9",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "0be9036e-4cb4-4d95-b45a-b8725b4a2b73",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test357375",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19924,
-    "name": "Round 2 - Match 13",
-    "nextMatchId": 19923,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "4ce605b1-28c5-4359-a2b8-5aa232299f2e",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TESTWTF",
-        "picture": "teamlogos/images_wstysk"
-      },
-      {
-        "id": "0f8844f8-91a3-4969-9557-8ac560f3a7d2",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "TestTeam12344",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19927,
-    "name": "Round 2 - Match 14",
-    "nextMatchId": 19923,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "ad2a0a89-d3bb-49dd-b8fc-2ec100e33477",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Testing new Team",
-        "picture": null
-      },
-      {
-        "id": "613f708c-b000-4aa7-a9b1-47de355c9fac",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "testteam",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19931,
-    "name": "Round 2 - Match 15",
-    "nextMatchId": 19930,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "b5edee08-6d0a-4e3d-9587-57a2d585e490",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Adam testar",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "7fbd66f3-7eaa-4567-bc87-5a82f10417ad",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "adamapexnice",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19934,
-    "name": "Round 2 - Match 16",
-    "nextMatchId": 19930,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "2",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "354506c4-d07d-4785-9759-755941a6cccc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TestTeam1234",
-        "picture": null
-      },
-      {
-        "id": "3dce492c-ecad-453c-98e7-2b96ddbf8800",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "gloot3 test",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19879,
-    "name": "Round 1 - Match 1",
-    "nextMatchId": 19878,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "bcbe20a3-82b5-4818-bb29-4c1149e9f04e",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "AdamsinLaDoncu",
-        "picture": "teamlogos/px6aikyzeej5vhecturj"
-      },
-      {
-        "id": "a552ca06-579d-41ee-9405-4cedd187c5bf",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Test of Tests",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19880,
-    "name": "Round 1 - Match 2",
-    "nextMatchId": 19878,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "5acb196d-5f82-47f3-ae5a-2e87d070f610",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "testtesttetstst",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "6d9ec9e8-d10d-424b-a00f-2078d4e08d39",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test9",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19882,
-    "name": "Round 1 - Match 3",
-    "nextMatchId": 19881,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "acf45434-78a1-4907-bf19-92235d180e8b",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "omaromar",
-        "picture": null
-      },
-      {
-        "id": "be2db859-515f-4159-9051-6723d0b47eb7",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Test3",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19883,
-    "name": "Round 1 - Match 4",
-    "nextMatchId": 19881,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "fdce979a-002e-4906-a80f-d161f108bcde",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "omar boi",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "b264744c-0114-46b9-ab28-a7f56aded7bd",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "omar",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19886,
-    "name": "Round 1 - Match 5",
-    "nextMatchId": 19885,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "d9a7b576-9d7e-430c-aa7e-6401d6eb7cf8",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Testteam2",
-        "picture": null
-      },
-      {
-        "id": "c7a2ec6b-389f-429d-819e-53594e94d475",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test123",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19887,
-    "name": "Round 1 - Match 6",
-    "nextMatchId": 19885,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "8411c4ef-f337-42c9-bff9-63c2f0e80255",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "TESTGLL",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "059743f7-9501-471e-8f9e-2d1032eccc67",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TestTeamz",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19889,
-    "name": "Round 1 - Match 7",
-    "nextMatchId": 19888,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "ce914b1b-fe1e-4be9-8409-681049265614",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test5",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "86cd4ff0-14ae-445c-820a-777fe448cddb",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "ALEX",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19890,
-    "name": "Round 1 - Match 8",
-    "nextMatchId": 19888,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "51c449a7-fb04-445a-b478-1ca95feeeafa",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test73",
-        "picture": null
-      },
-      {
-        "id": "b370498e-5e54-4d98-88ef-ba039ee7fb62",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "adam24",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19894,
-    "name": "Round 1 - Match 9",
-    "nextMatchId": 19893,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "f00e68b3-70d4-46c6-8004-1b2726adb0dc",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "testforcontentful",
-        "picture": "teamlogos/5o7zgmejbgc41_ip4xil"
-      },
-      {
-        "id": "e7fe8889-13e8-46f7-8515-3c9d89c07ba1",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test87",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19895,
-    "name": "Round 1 - Match 10",
-    "nextMatchId": 19893,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "43ddad56-5798-4364-bd5c-81ba2640e22a",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "testing",
-        "picture": null
-      },
-      {
-        "id": "a34587db-a088-44ba-98b2-c8efd07df9ed",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "TestTeam2253",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19897,
-    "name": "Round 1 - Match 11",
-    "nextMatchId": 19896,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "7eac0db4-2e53-4f42-a670-58847b1f5e4c",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Test 1",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "20bc489c-6c63-402f-908e-586e531a96b2",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Test146",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19898,
-    "name": "Round 1 - Match 12",
-    "nextMatchId": 19896,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "3947ccbc-18d4-47e3-ba19-f1ba697800e3",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "omarnice",
-        "picture": null
-      },
-      {
-        "id": "85568369-9f06-4098-be5f-1922e2ae61e5",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Testpubg",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19901,
-    "name": "Round 1 - Match 13",
-    "nextMatchId": 19900,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "e44b992f-676c-492e-98d2-b238162cc2e0",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test team 1234",
-        "picture": "teamlogos/image_8_grwpnj"
-      },
-      {
-        "id": "5b29528f-0dab-4dea-97d8-e6528b6cfc6c",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "glltest",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19902,
-    "name": "Round 1 - Match 14",
-    "nextMatchId": 19900,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "5a02ce4d-ad2a-4ee7-b3d2-4dad7b9b164a",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "TestTeam1243",
-        "picture": null
-      },
-      {
-        "id": "9d13814a-81b9-43d1-b9f9-42da1fe22578",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "adam peleback",
-        "picture": "teamlogos/G-Loot_Logo_Portrait_Green_Black128px_yhkf4w"
-      }
-    ]
-  },
-  {
-    "id": 19904,
-    "name": "Round 1 - Match 15",
-    "nextMatchId": 19903,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "856abe5e-5e46-4113-8485-f7829aeb27ba",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "omarpubgnotnice",
-        "picture": null
-      },
-      {
-        "id": "c266ef2c-eab7-4b14-b41a-03265b6dfd74",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "adamamd",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19905,
-    "name": "Round 1 - Match 16",
-    "nextMatchId": 19903,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "8055f16b-3cc9-495a-b40a-2742712be6c6",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Adam testar",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "c934f0ee-c9d8-4cf7-ad55-7f98a7b19b6f",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test2",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19910,
-    "name": "Round 1 - Match 17",
-    "nextMatchId": 19909,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "cb177e1d-6e6c-44b5-829a-45b699529274",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test50",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "2ae79460-4d1c-42a9-88cc-cf76adb4bb08",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Adamadamsms",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19911,
-    "name": "Round 1 - Match 18",
-    "nextMatchId": 19909,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "348c0a6b-5499-421a-9125-6b3d08bcef9c",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "TestingAgain",
-        "picture": "teamlogos/teddy-bear_tmxfyl"
-      },
-      {
-        "id": "02aae6b1-bd99-4469-9d5a-4a83019d7dbc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test6000",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19913,
-    "name": "Round 1 - Match 19",
-    "nextMatchId": 19912,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "91c101fd-d744-4eb1-abf1-7edfe09e7429",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "TestTeamz123",
-        "picture": null
-      },
-      {
-        "id": "de637dbe-363b-40cd-bae9-5a5e97a61ccc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Test Post",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19914,
-    "name": "Round 1 - Match 20",
-    "nextMatchId": 19912,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "1262eafb-9d48-4536-a428-fb43d0da2e07",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Test 2",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "b4889d7a-5e25-4bae-aa4a-40776f44ef2d",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "omarapexnice",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19917,
-    "name": "Round 1 - Match 21",
-    "nextMatchId": 19916,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "390f872a-fe15-48a3-9283-4191ff4263e7",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Test123",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "59a941da-398d-4dbd-baa6-1769314e5826",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "teståtestätestö",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19918,
-    "name": "Round 1 - Match 22",
-    "nextMatchId": 19916,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "cc4b8479-e825-40a8-b24b-3f0fbfb421f4",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test9",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "3a353047-4af3-4320-b2cf-2d83ddc9115a",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TestTeamData",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19920,
-    "name": "Round 1 - Match 23",
-    "nextMatchId": 19919,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "4b5c9937-9e69-4e5b-8344-6a68d6c12a64",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test9",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "a37c7aeb-38bd-46b8-87f7-3cbaf212a9fb",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "TestingClient",
-        "picture": "teamlogos/gentleman-bear_gwzbjd"
-      }
-    ]
-  },
-  {
-    "id": 19921,
-    "name": "Round 1 - Match 24",
-    "nextMatchId": 19919,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "0be9036e-4cb4-4d95-b45a-b8725b4a2b73",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "test357375",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "2486582b-574a-40fc-a8d3-b426cda99abf",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Chat test",
-        "picture": "teamlogos/асдасдадс_ziqhqk"
-      }
-    ]
-  },
-  {
-    "id": 19925,
-    "name": "Round 1 - Match 25",
-    "nextMatchId": 19924,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "3ae53b5b-958d-4f01-a40e-bab340036a29",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "testadam",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "4ce605b1-28c5-4359-a2b8-5aa232299f2e",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TESTWTF",
-        "picture": "teamlogos/images_wstysk"
-      }
-    ]
-  },
-  {
-    "id": 19926,
-    "name": "Round 1 - Match 26",
-    "nextMatchId": 19924,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "DONE",
-    "participants": [
-      {
-        "id": "c85a0d8a-4e22-4781-8494-d2cd600a3396",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Gloot1 test",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "0f8844f8-91a3-4969-9557-8ac560f3a7d2",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TestTeam12344",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19928,
-    "name": "Round 1 - Match 27",
-    "nextMatchId": 19927,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "ad2a0a89-d3bb-49dd-b8fc-2ec100e33477",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Testing new Team",
-        "picture": null
-      },
-      {
-        "id": "241150ef-951e-4e4c-82b5-9a26125521d1",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test200",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19929,
-    "name": "Round 1 - Match 28",
-    "nextMatchId": 19927,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "a35b99fb-fd75-4ed5-9a51-6cd772beebf0",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "TestTeam1696",
-        "picture": null
-      },
-      {
-        "id": "613f708c-b000-4aa7-a9b1-47de355c9fac",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "testteam",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19932,
-    "name": "Round 1 - Match 29",
-    "nextMatchId": 19931,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "7fbd66f3-7eaa-4567-bc87-5a82f10417ad",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "adamapexnice",
-        "picture": null
-      },
-      {
-        "id": "6eefadaa-11e0-4551-8874-faec113f875f",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test500000",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19933,
-    "name": "Round 1 - Match 30",
-    "nextMatchId": 19931,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "bb31a7b7-8563-416c-8c8f-b57b7b56fdca",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "test teamsfsfsfsfs",
-        "picture": null
-      },
-      {
-        "id": "b5edee08-6d0a-4e3d-9587-57a2d585e490",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "Adam testar",
-        "picture": "teamlogos/client_team_default_logo"
-      }
-    ]
-  },
-  {
-    "id": 19935,
-    "name": "Round 1 - Match 31",
-    "nextMatchId": 19934,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "f4e36b1f-ba40-4368-ab2e-97cad78c2932",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "Testabc",
-        "picture": null
-      },
-      {
-        "id": "354506c4-d07d-4785-9759-755941a6cccc",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "TestTeam1234",
-        "picture": null
-      }
-    ]
-  },
-  {
-    "id": 19936,
-    "name": "Round 1 - Match 32",
-    "nextMatchId": 19934,
-    "nextLooserMatchId": undefined,
-    "tournamentRoundText": "1",
-    "startTime": "2021-05-30",
-    "state": "SCORE_DONE",
-    "participants": [
-      {
-        "id": "3dce492c-ecad-453c-98e7-2b96ddbf8800",
-        "resultText": "Won",
-        "isWinner": true,
-        "status": "PLAYED",
-        "name": "gloot3 test",
-        "picture": "teamlogos/client_team_default_logo"
-      },
-      {
-        "id": "8ef16ac0-358b-4d6a-8049-1f3962d060e0",
-        "resultText": "Lost",
-        "isWinner": false,
-        "status": "PLAYED",
-        "name": "TestTeam1253",
-        "picture": null
-      }
-    ]
-  }
-]
-*/
+const defaultTheme: Theme = {
+  fontFamily: '"Roboto", "Arial", "Helvetica", "sans-serif"',
+  transitionTimingFunction: 'cubic-bezier(0, 0.92, 0.77, 0.99)',
 
+  disabledColor: '#5D6371',
+  matchBackground: {
+    wonColor: '#1D2232',
+    lostColor: '#141822',
+  },
+  border: {
+    //color: '#22293B',
+    color: '#cc1540',
+    highlightedColor: '#707582',
+  },
+  textColor: {
+    highlighted: '#E9EAEC',
+    //main: '#BEC0C6',
+    main: '#000000',
+    //dark: '#707582',
+    dark: '#ffffff',
+    disabled: '#5D6371',
+  },
+  score: {
+    text: {
+      highlightedWonColor: '#118ADE',
+      highlightedLostColor: '#FF9505',
+    },
+    background: {
+      wonColor: '#10131C',
+      lostColor: '#10131C',
+    },
+  },
+  canvasBackground: '#0B0D13',
+};
 
-export const SingleElimination = () => (
-  <SingleEliminationBracket
-    matches={demoMatches}
-    matchComponent={Match}
-    svgWrapper={({ children, ...props }) => (
-      <SVGViewer width={1000} height={1000} {...props}>
-        {children}
-      </SVGViewer>
-    )}
-  />
-);
+export const SingleElimination = () => {
+  const [width, height] = useWindowSize();
+  const finalWidth = Math.max(width - 500, 500);
+  const finalHeight = Math.max(height - 1000, 500);
+
+  return (
+    <SingleEliminationBracket
+      theme={defaultTheme}
+      matches={demoMatches}
+      options={{
+        style: {
+          // Other things that we can style up:
+          //roundHeader: { backgroundColor: '#AAA' },
+          //connectorColor: '#FF8C00',
+          connectorColor: 'aqua',
+          connectorColorHighlight: 'aqua',
+        },
+      }}
+      matchComponent={({
+        match,
+        onMatchClick,
+        onPartyClick,
+        onMouseEnter,
+        onMouseLeave,
+        topParty,
+        bottomParty,
+        topWon,
+        bottomWon,
+        topHovered,
+        bottomHovered,
+        topText,
+        bottomText,
+        connectorColor,
+        computedStyles,
+        teamNameFallback,
+        resultFallback,
+      }) => (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-around',
+            color: '#fff',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          {topText && <div>{topText}</div>}
+          <div
+            onMouseEnter={() => onMouseEnter(topParty.id)}
+            style={{ display: 'flex' }}
+          >
+            <div>{topParty.name || teamNameFallback}</div>
+            {/* TODO: Put prediction result in the resultText object */}
+            <div style={{ marginLeft: '16px' }}>{topParty.resultText ?? resultFallback(topParty)}</div>
+          </div>
+          <div
+            style={{ height: '1px', width: '100%', background: connectorColor }}
+          />
+          <div
+            onMouseEnter={() => onMouseEnter(bottomParty.id)}
+            style={{ display: 'flex' }}
+          >
+            <div>{bottomParty.name || teamNameFallback}</div>
+            <div>{bottomParty.resultText ?? resultFallback(topParty)}</div>
+          </div>
+          <div>{bottomText}</div>
+        </div>
+      )}
+      svgWrapper={({ children, ...props }) => (
+        <SVGViewer background={'black'} SVGBackground={'black'} width={finalWidth} height={finalHeight} {...props}>
+          {children}
+        </SVGViewer>
+      )}
+    />
+  );
+};
 
 function App() {
 
-  //console.log('teamNames: ', TeamNames.teams.length);
-
-  //console.log('SampleSubmission: ', SampleSubmission.predictions)
-
-  //console.log('teams: ', TeamNames.teams);
-
-  const teams = {};
+  // Make a map of team ids to names
+  const teams: Record<string, string> = {};
   TeamNames.teams.forEach((team) => {
     teams[team.TeamID] = team.TeamName
   });
 
-  console.log('team map: ', teams);
-
-  const predictions = [];
+  // Make a map of match ID's to predictions.
+  // See SampleSubmission2023.json for more info.
+  // id format: 2023_<team1Id>_<team2Id>,
+  const predictions: Record<string, string> = {}
   SampleSubmission.predictions.forEach((prediction) => {
-    const split = prediction.ID.split("_");
-    const year = parseInt(split[0]);
-    const team1 = parseInt(split[1]);
-    const team2 = parseInt(split[2]);
+    predictions[prediction.ID] = prediction.Pred;
+  })
 
-    //console.log('year: ', year);
-    //console.log('team1Name: ', teams[team1]);
-    //console.log('team2Name: ', teams[team2]);
-    //console.log('prediction: ', prediction.Pred);
+  demoMatches.forEach((match) => {
+    // Iterate through each match and print out who is playing who, as well as the prediction for the match.
+    const team1 = match.participants[0];
+    const team2 = match.participants[1];
 
+    // may be a little confusing, but:
+    // teams in Kaggle's submission format have four digit ids.
+    // anything else that's a UUID is something that is just in there for mocking purposes at the moment.
+    // Matches where players are undecided will have UUIDs as a team id (or a name of name BLANK, ---)
+
+    // Might be good idea to move this into a filter.
+    if (team1.id.length > 4 || team2.id.length > 4) {
+      console.log('returning early: ');
+      console.log('uuid team1 id: ', team1.id);
+      console.log('uuid team1 name: ', team1.name);
+
+      console.log('uuid team2 id: ', team2.id);
+      console.log('uuid team2.name: ', team2.name);
+      return;
+    }
+
+    console.log('team1 id: ', team1.id);
+    console.log('team1 name: ', team1.name);
+
+    console.log('team2 id: ', team2.id);
+    console.log('team2.name: ', team2.name);
+
+
+    // NOTE: lower team ids go first.
+    // smash ids together and get the prediction.
+    const predictionId = `2023_${team1.id}_${team2.id}`;
+
+    const predictionResult = predictions[predictionId];
+    console.log('predictionResult: ', predictionResult);
+    if (!predictionResult) {
+      console.log('trying fallback prediction id: ')
+      // Not sure which way the matchup works, could be team2 to team1 as well,
+      // really depends on what our dataset is returning back to us.
+      const fallbackPredictionId = `2023_${team2.id}_${team1.id}`;
+      console.log('predictionResult: ', predictions[fallbackPredictionId]);
+    }
   })
 
   return (
@@ -3580,4 +2011,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
